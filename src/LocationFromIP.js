@@ -1,6 +1,7 @@
 // dependencies / things imported
 import { LitElement, html, css } from 'lit';
 import { UserIP } from './UserIP.js';
+import '@lrnwebcomponents/wikipedia-query/wikipedia-query.js';
 
 export class LocationFromIP extends LitElement {
   static get tag() {
@@ -12,6 +13,8 @@ export class LocationFromIP extends LitElement {
     this.locationEndpoint = 'https://freegeoip.app/json/';
     this.long = null;
     this.lat = null;
+    this.city = null;
+    this.state = null;
   }
 
   static get properties() {
@@ -42,6 +45,8 @@ export class LocationFromIP extends LitElement {
         console.log(data);
         this.long = data.longitude;
         this.lat = data.latitude;
+        this.city = data.city;
+        this.state = data.region_name;
         return data;
       });
   }
@@ -64,7 +69,17 @@ export class LocationFromIP extends LitElement {
     // this function runs every time a properties() declared variable changes
     // this means you can make new variables and then bind them this way if you like
     const url = `https://maps.google.com/maps?q=${this.lat},${this.long}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-    return html`<iframe title="Where you are" src="${url}"></iframe> `;
+    return html`
+      <iframe title="Where you are" src="${url}"></iframe>
+      <p>
+        <a href="https://www.google.com/maps/@${this.lat},${this.long},14z"
+          >https://www.google.com/maps/@${this.lat},${this.long},14z</a
+        >
+      </p>
+      <wikipedia-query search="${this.city}, ${this.state}"></wikipedia-query>
+      <wikipedia-query search="${this.city}"></wikipedia-query>
+      <wikipedia-query search="${this.state}"></wikipedia-query>
+    `;
   }
 }
 
