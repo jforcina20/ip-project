@@ -13,6 +13,59 @@
       padding: 50px;
       font-family: sans-serif;
     }
+  </style>
+  <title>Lab 4/5</title>
+</head>
+
+<body>
+  <h1>NASA Image Search</h1>
+  <p>Enter a search term</p>
+  <form name="searchForm">
+    <input id="searchTerm" type="text" value="Moon Landing">
+    <input id="submitForm" type="button" value="Search">
+    <input id="dataOnly" type="checkbox" value="">Return Data Only</input>
+  </form>
+  <br>
+  <nasa-image-search id="findImages"></nasa-image-search>
+  <script type="module">
+    import "./src/NasaImage.js";
+    // 
+    const checkbox = document.getElementById('dataOnly');
+    checkbox.addEventListener('change', (event) => {
+      if (event.currentTarget.checked) {
+        console.log('checked');
+        document.querySelector("#findImages").listOnly = true;
+      } else {
+        console.log('unchecked');
+        document.querySelector("#findImages").listOnly = false;
+      }
+    })
+    
+    document.querySelector("#submitForm").addEventListener("click", (e) => {
+        document.querySelector("#findImages").searchImages = true;
+        document.querySelector("#findImages").search = document.forms["searchForm"]["searchTerm"].value;
+    });
+  </script>
+</body>
+
+</html>
+
+<!--
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Put your description here.">
+  <base href="/">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 50px;
+      font-family: sans-serif;
+    }
     hello-world {
       border: 10px solid black;
     }
@@ -66,3 +119,4 @@
 </body>
 
 </html>
+-->
